@@ -3,7 +3,17 @@ const path = require('path')
 const _ = require('lodash')
 
 const dir = path.join('build', 'contracts')
-const dirFiles = fs.readdirSync(dir)
+
+try {
+    const dirFiles = fs.readdirSync(dir)
+} catch(err) {
+    if(err.code === 'ENOENT') {
+        fs.writeFileSync('networks.json', '{}')
+        return
+    } else {
+        throw err
+    }
+}
 
 Promise.all(dirFiles.filter((fname) => fname.endsWith('.json')).map((fname) => new Promise((resolve, _reject) => {
     fs.readFile(path.join(dir, fname), (err, data) => {
