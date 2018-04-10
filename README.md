@@ -8,7 +8,6 @@ A little Truffle box.
 * Designed to work with NPM and Git out of the box.
 * Comes with its own Truffle.
 * Gives you a `truffle-local.js` to hide things in.
-* Has robot maintainers.
 
 Sounds good? Get it with:
 
