@@ -5,7 +5,10 @@
   },
   "scripts": {
     "test": "truffle test",
-    "truffle": "truffle"
+    "truffle": "truffle",
+    "extractnetinfo": "node scripts/extract_network_info.js",
+    "injectnetinfo": "node scripts/inject_network_info.js",
+    "resetnetinfo": "truffle networks --clean && node scripts/inject_network_info.js"
   },
   "devDependencies": {
     "lodash": "^4.17.5",

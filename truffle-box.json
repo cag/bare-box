@@ -7,7 +7,10 @@
     "Local Truffle": "npm run truffle <command> -- [options]",
     "Compile": "npm run truffle compile",
     "Migrate": "npm run truffle migrate",
-    "Test contracts": "npm test"
+    "Test contracts": "npm test",
+    "Extract network info from build into `networks.json`": "npm run extractnetinfo",
+    "Inject network info from `networks.json` into build": "npm run injectnetinfo",
+    "Clean and inject network info for build": "npm run resetnetinfo",
   },
   "hooks": {
     "post-unpack": "npm install"
