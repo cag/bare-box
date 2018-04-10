@@ -1,6 +1,6 @@
 # lil-box
 
-[![Build Status](https://travis-ci.org/gnosis/lil-box.svg?branch=master)](https://travis-ci.org/gnosis/lil-box)
+[![Build Status](https://travis-ci.org/cag/lil-box.svg?branch=master)](https://travis-ci.org/cag/lil-box)
 
 A little Truffle box.
 
