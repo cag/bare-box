@@ -1,0 +1,13 @@
+{
+  "directories": {
+    "lib": "contracts",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "truffle test",
+    "truffle": "truffle"
+  },
+  "devDependencies": {
+    "truffle": "^4.1.5"
+  }
+}
