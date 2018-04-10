@@ -9,3 +9,7 @@ A little Truffle box.
 * Comes with its own Truffle.
 * Gives you a `truffle-local.js` to hide things in.
 * Has robot maintainers.
+
+Sounds good? Get it with:
+
+    truffle unbox cag/lil-box
