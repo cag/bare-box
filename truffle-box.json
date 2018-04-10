@@ -8,5 +8,8 @@
     "Compile": "npm run truffle compile",
     "Migrate": "npm run truffle migrate",
     "Test contracts": "npm test"
+  },
+  "hooks": {
+    "post-unpack": "npm install"
   }
 }
