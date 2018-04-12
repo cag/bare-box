@@ -2,4 +2,4 @@
 // a config object merged into the Truffle configuration.
 // Configuration here takes precedence.
 
-module.exports = {}
+module.exports = {};
