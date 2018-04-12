@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/gnosis/lil-box.svg?branch=master)](https://travis-ci.org/gnosis/lil-box)
 
-A little Truffle box.
+A little [Truffle](http://truffleframework.com/) box.
 
 * No frontend. Choose your own frontend adventure, or forgo it altogether!
 * Designed to work with NPM and Git out of the box.
