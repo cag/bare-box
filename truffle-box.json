@@ -9,7 +9,9 @@
       "npm run extractnetinfo",
     "Inject network info from `networks.json` into build":
       "npm run injectnetinfo",
-    "Clean and inject network info for build": "npm run resetnetinfo"
+    "Clean and inject network info for build": "npm run resetnetinfo",
+    "Run linter": "npm run lint",
+    "Format JS and JSON": "npm run fmtsrc"
   },
   "hooks": {
     "post-unpack": "npm install"
