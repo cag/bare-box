@@ -1,4 +1,4 @@
 module.exports = {
-    env: { node: true },
-    "extends": ["standard","plugin:prettier/recommended"]
+  env: { es6: true, node: true },
+  extends: ["plugin:prettier/recommended"]
 };
