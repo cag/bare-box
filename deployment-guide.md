@@ -19,7 +19,7 @@ This allows one to use a 12-word BIP39 mnemonic to derive a keypair and its asso
 Need one on the fly? One trick to get one is to run [Ganache CLI](https://github.com/trufflesuite/ganache-cli) for a moment and quit it with Ctrl+C:
 
 ```
-$ ./node_modules/.bin/ganache-cli # I am running the local copy here, but you can use a global instance if you have one
+$ ganache-cli
 Ganache CLI v6.0.3 (ganache-core: 2.0.2)
 
 Available Accounts
