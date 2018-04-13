@@ -1,4 +1,4 @@
-# Truffle Package Deployment Guide
+# Deployment Guide
 
 Let's say you have written a package with Solidity using this Truffle box. This guide covers handling a scenario in which this Truffle project has to play nice with:
 
