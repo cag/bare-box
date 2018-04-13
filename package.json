@@ -4,6 +4,7 @@
     "test": "test"
   },
   "scripts": {
+    "prepack": "eslint . && npm run fmtsrc && truffle compile && npm run resetnetinfo",
     "test": "truffle test",
     "truffle": "truffle",
     "extractnetinfo": "node scripts/extract_network_info.js",

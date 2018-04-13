@@ -29,3 +29,19 @@ This box also comes with source code linting provided by [ESLint](https://eslint
 and formatting by [Prettier](https://prettier.io/):
 
     npm run fmtsrc
+
+### Ignored Files/Directories for Different Systems
+
+Both `.gitignore` and `.npmignore` are specified in this box.
+
+`truffle-local.js` is ignored by both Git and NPM, and can contain configuration local to the machine.
+
+The `build` folder is ignored by Git since build artifacts can be almost entirely reproduced by the local Truffle instance and the contract source code, with the exception of deployment information.
+
+However, the `build` folder is *not* ignored by NPM. This means `lil-box` developers can publish packages on NPM which also contain deployment information. Subsequent users of those packages then have direct access to those deployments.
+
+Also, a `.prettierignore` instructs Prettier to ignore the outputs of build processes.
+
+### NPM `prepack` Hook
+
+For preparing NPM packages, a `prepack` hook is included which will lint and format the source, as well as compile Truffle build artifacts and reset the deployment information on these artifacts using the [deployment tools](deployment-guide.md).

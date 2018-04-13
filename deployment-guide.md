@@ -169,24 +169,55 @@ then everything went well, and your contracts are now deployed on Rinkeby!
 
 Go get some [Kovan ether](https://github.com/kovan-testnet/faucet) for the same address, and deploy it on Kovan with `npm run truffle migrate -- --network kovan`
 
+## Inspecting and Preparing Deployed Addresses
+
+After running the migrations, Truffle places the deployed addresses inside of the build artifacts located in `build/contracts`. These build artifacts are JSON files which, when converted to a plain JS object and passed as an argument to [`truffle-contract`](https://github.com/trufflesuite/truffle-contract), yields a Truffle contract abstraction which may be used in decentralized application clients.
+
+The deployment execution in the last section resulted in a unique set of addresses which must be distributed to clients. You may run `npm run truffle networks` to see a list of the most recent deployment locations:
+
+```text
+$ npm run truffle networks
+
+> big-token@2.0.0 truffle /home/alan/src/github.com/cag/big-token
+> truffle "networks"
+
+
+Network: UNKNOWN (id: 4447)
+  AddressRegistry: 0xf25186b5081ff5ce73482ad761db0eb0d25abfbf
+  BigToken: 0x345ca3e014aaf5dca488057592ee47305d9b3e10
+  Migrations: 0x8cdaf0cd259887258bc13a92c0a6da92698644c0
+
+Network: kovan (id: 42)
+  AddressRegistry: 0xd3515609e3231d6c5b049a28d0d09d038b4cfaed
+  BigToken: 0x0152b7ed5a169e0292525fb2bf67ef1274010c74
+  Migrations: 0xf0681a06da32b8276b0a7b685019056c2bcfbf13
+
+Network: rinkeby (id: 4)
+  AddressRegistry: 0xd3515609e3231d6c5b049a28d0d09d038b4cfaed
+  BigToken: 0x0152b7ed5a169e0292525fb2bf67ef1274010c74
+  Migrations: 0xf0681a06da32b8276b0a7b685019056c2bcfbf13
+```
+
+You may also verify that the `networks` key in the build artifacts contains (and in fact is the source of) this information. You may also see deployment information for some `UNKNOWN` networks. Those are typically associated with previous runs of the migration scripts on development networks, such as ones created by `ganache-cli` or `truffle develop`. We can use `npm run truffle networks -- --clean` to remove the information associated with those networks from the build artifacts.
+
 ## Saving Deployed Addresses
 
-Information about deployment addresses *should* be preserved. In order to achieve this, we can use a script included with `olympia-token` to extract this information from the build artifacts into a file which sits outside of the Git ignore list:
+Information about deployment addresses *should* be preserved for source control. In order to achieve this, we can use a script included with `lil-box` to extract this information from the build artifacts into `networks.json`:
 
 ```sh
 npm run extractnetinfo
 ```
 
-Running this command will create or overwrite `networks.json` with all of the network information contained in the build artifacts. This is the file which should be checked into version control. Once we have this, build artifacts containing the deployment information for the Rinkeby network can be restored from plain build artifacts:
+Running this command will create or overwrite `networks.json` with all of the network information contained in the build artifacts. Once we have this, build artifacts containing the deployment information for the Rinkeby network can be restored from plain build artifacts:
 
 ```sh
 npm run injectnetinfo
 ```
 
-Furthermore, if there are future deployments which clutter or overwrite existing deployment information, the build artifacts can still be reset to this point:
+Furthermore, the following command will remove `UNKNOWN` network information before injecting the network information into the build artifacts:
 
 ```sh
 npm run resetnetinfo
 ```
 
-Note that `resetnetinfo` is invoked as part of `prepublishOnly` to ensure that build artifacts published on NPM contain just the deployment information required for dapp clients.
+Note that `resetnetinfo` is invoked as part of `prepack` to ensure that build artifacts published on NPM contain just the canonical deployment information required for dapp clients.
