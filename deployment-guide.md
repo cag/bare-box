@@ -8,6 +8,31 @@ Let's say you have written a package with Solidity using this Truffle box. This 
 
 We will cover a scenario in which the deploying account is part of a hierarchical deterministic wallet derived from a 12-word [BIP39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) mnemonic.
 
+## Specify Target Networks
+
+You may choose any networks you'd like for the deployment. For illustrative purposes, let's suppose that you are going with the [Rinkeby](https://www.rinkeby.io/#stats) and [Kovan](https://kovan-testnet.github.io/website/) testnets. You will need to modify `truffle.js` to declare your intention to deploy on these networks:
+
+```js
+// Modify the base configuration as follows:
+
+const config = {
+  networks: {
+    rinkeby: {
+      network_id: 4
+    },
+    kovan: {
+      network_id: 42
+    }
+  }
+};
+
+// (rest of config...)
+```
+
+Be sure to declare the correct network IDs for the respective networks you decide to name in your Truffle configuration. [Here is a list of these network IDs.](https://ethereum.stackexchange.com/a/17101)
+
+We do these declarations so that we can take advantage of the behavior of `truffle networks --clean`. See [these docs](http://truffleframework.com/docs/advanced/commands#networks) for more details.
+
 ## Make an HD Wallet for the Deployment
 
 [`truffle-hdwallet-provider`](https://github.com/trufflesuite/truffle-hdwallet-provider) can be used to furnish a provider which is backed by a BIP39 HD wallet. Let's install this locally in this repository as a development dependency:
@@ -61,19 +86,31 @@ Take note of the list of addresses and the mnemonic, which in this instance is `
 Go ahead and put the following in `truffle-local.js`:
 
 ```js
-const HDWalletProvider = require('truffle-hdwallet-provider')
+const HDWalletProvider = require("truffle-hdwallet-provider");
 
-const mnemonic = 'romance spirit scissors guard buddy rough cabin paddle cricket cactus clock buddy'
-const infuraAccessKey = ''
-const accountIndex = 7
+const mnemonic =
+  "romance spirit scissors guard buddy rough cabin paddle cricket cactus clock buddy";
+const infuraAccessKey = "";
+const accountIndex = 7;
 
 module.exports = {
-    networks: {
-        rinkeby: {
-            provider: new HDWalletProvider(mnemonic, `https://rinkeby.infura.io/${ infuraAccessKey }`, accountIndex)
-        }
+  networks: {
+    rinkeby: {
+      provider: new HDWalletProvider(
+        mnemonic,
+        `https://rinkeby.infura.io/${infuraAccessKey}`,
+        accountIndex
+      )
+    },
+    kovan: {
+      provider: new HDWalletProvider(
+        mnemonic,
+        `https://kovan.infura.io/${infuraAccessKey}`,
+        accountIndex
+      )
     }
-}
+  }
+};
 ```
 
 The account used for the deployment will be associated with the `mnemonic` and the `accountIndex` specified above (note that this index is 7 in this example). Therefore, the address which does the deployment in this example will be `0x8c21c0d69a6abfcea2622808fc531cdba35055cc`.
@@ -84,7 +121,7 @@ Also note that we will, for the purposes of this guide, be relying on the infras
 
 Run `npm run truffle compile` to check that there aren't any basic scripting errors that have been introduced while writing `truffle-local.js`.
 
-Then run `npm run truffle migrate -- --network rinkeby` to deploy the contracts using the scripts in the `migrations` folder.
+Then let's try to deploy our contracts on Rinkeby. Run `npm run truffle migrate -- --network rinkeby` to deploy the contracts using the scripts in the `migrations` folder.
 
 Assuming you haven't funded your account with test ether yet, you will probably get an error like the following:
 
@@ -99,43 +136,38 @@ Error encountered, bailing. Network state unknown. Review successful transaction
 insufficient funds for gas * price + value
 ```
 
-If you're following along with this guide, go ahead and [get some Rinkeby test ether](https://www.rinkeby.io/#faucet) for your account. Then try running `npm run truffle migrate -- --network rinkeby` again. This will take a couple of minutes.
+If that is the case, go ahead and [get some Rinkeby test ether](https://www.rinkeby.io/#faucet) for your account. Then try running `npm run truffle migrate -- --network rinkeby` again. This will probably take a couple of minutes.
 
 If you see something like the following in your terminal (except with your own contracts):
 
 ```text
-> truffle migrate "--network" "rinkeby"
+> truffle "migrate" "--network" "rinkeby"
 
+Keccak bindings are not compiled. Pure JS implementation will be used.
 Using network 'rinkeby'.
 
 Running migration: 1_initial_migration.js
   Deploying Migrations...
-  ... 0x039e0454560f81b6373233e84e5dc5a4e6351277a85cc8767ddfb5f88cd5c3d8
-  Migrations: 0x4822ea9c767071bab1f89cbeaf82d667d6bbc0c4
+  ... 0x0cf2524f634278b11d0ce41f5c2e157492029c642d721af8343e76586eb4a06e
+  Migrations: 0xf0681a06da32b8276b0a7b685019056c2bcfbf13
 Saving successful migration to network...
-  ... 0x1f7e4d2dbf3eed09d3a177f58dd17c5d08f0a069ab94428e0105191231f50958
+  ... 0x60bae6840a643b1078320a2b8305694ee8544d293892984c751fb212176dbe87
 Saving artifacts...
 Running migration: 2_deploy_contracts.js
-  Deploying Math...
-  ... 0xe7c54c4f717b9af2c55ab776c2c39ba8ec330802a63156986f4a52add272f02f
-  Math: 0x42384e04beb1d2946c416f96bbd2e9f4fb4684b2
-  Linking Math to OlympiaToken
-  Deploying OlympiaToken...
-  ... 0x06230721f6f061c1c08ab35aa111c4a87a5a47f3d40ca957f87b570abf400d96
-  OlympiaToken: 0xff730e9a89f39fe662c63086c986edae696f61b9
-Saving successful migration to network...
-  ... 0xf04ef84a08ad3f5e2c4b32c9789a61fc3ec68309f264df77d340b8472be1fcf5
-Saving artifacts...
-Running migration: 3_deploy_address_registry.js
+  Deploying BigToken...
+  ... 0x3f78c1aae7e5940590d903f6f32f588bb904f6973bf03d18c7e85ca2c1299693
+  BigToken: 0x0152b7ed5a169e0292525fb2bf67ef1274010c74
   Deploying AddressRegistry...
-  ... 0x2971a6e9f611b5cae5b7c0687402156b044993af8f1be58789b05999a5ade910
-  AddressRegistry: 0xb36e4d8b39c2bf89ba4b76bf2a952656c40fdf1f
+  ... 0xaa10a3d8ba2a08ae277eaadd5b876753ac118ede542ae89c25c882eda3766c53
+  AddressRegistry: 0xd3515609e3231d6c5b049a28d0d09d038b4cfaed
 Saving successful migration to network...
-  ... 0xbc552bee40c0db8ff0cd81008180a91e9138742c0ce1caa4ee5ba37da1b511b5
+  ... 0x7b8d3fe644e224607551488e3323acfc856b5b9e8f2bb929e9508e534faf4fd5
 Saving artifacts...
 ```
 
 then everything went well, and your contracts are now deployed on Rinkeby!
+
+Go get some [Kovan ether](https://github.com/kovan-testnet/faucet) for the same address, and deploy it on Kovan with `npm run truffle migrate -- --network kovan`
 
 ## Saving Deployed Addresses
 
