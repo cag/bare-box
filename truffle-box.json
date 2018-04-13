@@ -1,5 +1,5 @@
 {
-  "ignore": ["README.md", "test/.gitkeep"],
+  "ignore": ["README.md", "test/.gitkeep", "deployment-guide.md"],
   "commands": {
     "Local Truffle": "npm run truffle <command> -- [options]",
     "Compile": "npm run truffle compile",
