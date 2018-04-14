@@ -169,6 +169,8 @@ then everything went well, and your contracts are now deployed on Rinkeby!
 
 Go get some [Kovan ether](https://github.com/kovan-testnet/faucet) for the same address, and deploy it on Kovan with `npm run truffle migrate -- --network kovan`
 
+If you would like to redeploy these contracts and generate new addresses for them on a network, you may use `truffle migrate -- --reset --network [YOUR NETWORK HERE]`.
+
 ## Inspecting and Preparing Deployed Addresses
 
 After running the migrations, Truffle places the deployed addresses inside of the build artifacts located in `build/contracts`. These build artifacts are JSON files which, when converted to a plain JS object and passed as an argument to [`truffle-contract`](https://github.com/trufflesuite/truffle-contract), yields a Truffle contract abstraction which may be used in decentralized application clients.
