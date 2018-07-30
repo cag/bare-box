@@ -96,21 +96,19 @@ const accountIndex = 7;
 module.exports = {
   networks: {
     rinkeby: {
-      provider: new HDWalletProvider(
-        mnemonic,
-        `https://rinkeby.infura.io/${infuraAccessKey}`,
-        accountIndex
-      )
+      provider: function () {
+        return new HDWalletProvider(mnemonic, `https://rinkeby.infura.io/${infuraAccessKey}`,
+            accountIndex)
+      }
     },
     kovan: {
-      provider: new HDWalletProvider(
-        mnemonic,
-        `https://kovan.infura.io/${infuraAccessKey}`,
-        accountIndex
-      )
+      provider: function () {
+        return new HDWalletProvider(mnemonic, `https://kovan.infura.io/${infuraAccessKey}`,
+            accountIndex)
+      }
     }
   }
-};
+}
 ```
 
 The account used for the deployment will be associated with the `mnemonic` and the `accountIndex` specified above (note that this index is 7 in this example). Therefore, the address which does the deployment in this example will be `0x8c21c0d69a6abfcea2622808fc531cdba35055cc`.
